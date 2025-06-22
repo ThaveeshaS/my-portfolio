@@ -9,6 +9,7 @@ function App() {
           <li><a href="#home" className="hover:text-blue-600 transition">Home</a></li>
           <li><a href="#projects" className="hover:text-blue-600 transition">Projects</a></li>
           <li><a href="#skills" className="hover:text-blue-600 transition">Skills</a></li>
+          <li><a href="#education" className="hover:text-blue-600 transition">Education</a></li>
           <li><a href="#resume" className="hover:text-blue-600 transition">Resume</a></li>
           <li><a href="#contact" className="hover:text-blue-600 transition">Contact</a></li>
         </ul>
@@ -50,6 +51,19 @@ function App() {
           <li className="bg-white px-6 py-3 rounded-full shadow text-blue-600 font-semibold">React</li>
           <li className="bg-white px-6 py-3 rounded-full shadow text-blue-600 font-semibold">Tailwind CSS</li>
         </ul>
+      </section>
+
+      {/* Education */}
+      <section id="education" className="min-h-screen flex flex-col justify-center items-center bg-white py-20">
+        <h2 className="text-4xl font-bold mb-10 text-blue-600">Education</h2>
+        <div className="w-full max-w-2xl space-y-6">
+          <div className="bg-gradient-to-br from-blue-100 to-white rounded-xl shadow p-6">
+            <h3 className="text-2xl font-semibold mb-1">Your Degree</h3>
+            <p className="text-blue-600 font-medium mb-1">Your University Name</p>
+            <p className="text-gray-600">Year of Graduation</p>
+          </div>
+          {/* Add more education blocks as needed */}
+        </div>
       </section>
 
       {/* Resume / CV Download */}
