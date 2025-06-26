@@ -207,3 +207,171 @@ body {
 .footer-link:hover {
   transform: translateY(-2px);
 }
+
+/* Enhanced Glitch Animation for Role Text */
+.glitch-text {
+  position: relative;
+  display: inline-block;
+  color: #ffffff;
+  font-weight: bold;
+  letter-spacing: 0.05em;
+}
+
+.glitch-text.glitch-active {
+  animation: glitch-main 1.5s ease-in-out;
+}
+
+.glitch-text::before,
+.glitch-text::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  overflow: hidden;
+}
+
+.glitch-text.glitch-active::before {
+  animation: glitch-red 1.5s ease-in-out;
+  color: #ff0040;
+  z-index: -1;
+  clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+}
+
+.glitch-text.glitch-active::after {
+  animation: glitch-blue 1.5s ease-in-out;
+  color: #00ffff;
+  z-index: -2;
+  clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
+}
+
+@keyframes glitch-main {
+  0%, 15% {
+    transform: translate(0);
+    filter: hue-rotate(0deg);
+  }
+  20%, 25% {
+    transform: translate(-2px, -1px);
+    filter: hue-rotate(90deg);
+  }
+  30%, 35% {
+    transform: translate(-1px, 2px);
+    filter: hue-rotate(180deg);
+  }
+  40%, 45% {
+    transform: translate(3px, 1px);
+    filter: hue-rotate(270deg);
+  }
+  50%, 55% {
+    transform: translate(1px, -2px);
+    filter: hue-rotate(360deg);
+  }
+  60%, 65% {
+    transform: translate(-2px, 2px);
+    filter: hue-rotate(45deg);
+  }
+  70%, 75% {
+    transform: translate(2px, 1px);
+    filter: hue-rotate(135deg);
+  }
+  80%, 85% {
+    transform: translate(1px, -1px);
+    filter: hue-rotate(225deg);
+  }
+  90%, 95% {
+    transform: translate(-1px, -2px);
+    filter: hue-rotate(315deg);
+  }
+  100% {
+    transform: translate(0);
+    filter: hue-rotate(0deg);
+  }
+}
+
+@keyframes glitch-red {
+  0%, 15% {
+    transform: translate(0);
+    clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+  }
+  20%, 25% {
+    transform: translate(-3px, -2px);
+    clip-path: polygon(0 20%, 100% 20%, 100% 30%, 0 30%);
+  }
+  30%, 35% {
+    transform: translate(2px, -3px);
+    clip-path: polygon(0 60%, 100% 60%, 100% 70%, 0 70%);
+  }
+  40%, 45% {
+    transform: translate(-2px, 2px);
+    clip-path: polygon(0 10%, 100% 10%, 100% 40%, 0 40%);
+  }
+  50%, 55% {
+    transform: translate(3px, -1px);
+    clip-path: polygon(0 80%, 100% 80%, 100% 90%, 0 90%);
+  }
+  60%, 65% {
+    transform: translate(-1px, 3px);
+    clip-path: polygon(0 0%, 100% 0%, 100% 25%, 0 25%);
+  }
+  70%, 75% {
+    transform: translate(2px, 1px);
+    clip-path: polygon(0 50%, 100% 50%, 100% 75%, 0 75%);
+  }
+  80%, 85% {
+    transform: translate(-3px, -1px);
+    clip-path: polygon(0 15%, 100% 15%, 100% 35%, 0 35%);
+  }
+  90%, 95% {
+    transform: translate(1px, -2px);
+    clip-path: polygon(0 65%, 100% 65%, 100% 85%, 0 85%);
+  }
+  100% {
+    transform: translate(0);
+    clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+  }
+}
+
+@keyframes glitch-blue {
+  0%, 100% {
+    transform: translate(0);
+    clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
+  }
+  10% {
+    transform: translate(3px, 2px);
+    clip-path: polygon(0 70%, 100% 70%, 100% 80%, 0 80%);
+  }
+  20% {
+    transform: translate(-2px, 3px);
+    clip-path: polygon(0 30%, 100% 30%, 100% 40%, 0 40%);
+  }
+  30% {
+    transform: translate(2px, -2px);
+    clip-path: polygon(0 90%, 100% 90%, 100% 60%, 0 60%);
+  }
+  40% {
+    transform: translate(-3px, 1px);
+    clip-path: polygon(0 10%, 100% 10%, 100% 20%, 0 20%);
+  }
+  50% {
+    transform: translate(1px, -3px);
+    clip-path: polygon(0 75%, 100% 75%, 100% 100%, 0 100%);
+  }
+  60% {
+    transform: translate(-2px, -1px);
+    clip-path: polygon(0 25%, 100% 25%, 100% 50%, 0 50%);
+  }
+  70% {
+    transform: translate(3px, 1px);
+    clip-path: polygon(0 85%, 100% 85%, 100% 65%, 0 65%);
+  }
+  80% {
+    transform: translate(-1px, 2px);
+    clip-path: polygon(0 35%, 100% 35%, 100% 15%, 0 15%);
+  }
+  90% {
+    transform: translate(2px, -2px);
+    clip-path: polygon(0 55%, 100% 55%, 100% 95%, 0 95%);
+  }
+}
