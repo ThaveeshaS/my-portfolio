@@ -62,13 +62,18 @@ body {
   to { opacity: 1; transform: translateY(0); }
 }
 
+.canvas-container {
+  height: 500px;
+  max-height: 80vh;
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+}
+
 .profile-image {
   transition: transform 0.3s ease;
 }
 
-.profile-image.floating {
-  animation: float 3s ease-in-out infinite;
-}
 
 @keyframes float {
   0%, 100% { transform: translateY(0); }
