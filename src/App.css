@@ -207,3 +207,393 @@ body {
 .footer-link:hover {
   transform: translateY(-2px);
 }
+
+/* Enhanced Glitch Animation for Role Text */
+.glitch-text {
+  position: relative;
+  display: inline-block;
+  color: #ffffff;
+  font-weight: bold;
+  letter-spacing: 0.05em;
+}
+
+.glitch-text.glitch-active {
+  animation: glitch-main 1.5s ease-in-out;
+}
+
+.glitch-text::before,
+.glitch-text::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  overflow: hidden;
+}
+
+.glitch-text.glitch-active::before {
+  animation: glitch-red 1.5s ease-in-out;
+  color: #ff0040;
+  z-index: -1;
+  clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+}
+
+.glitch-text.glitch-active::after {
+  animation: glitch-blue 1.5s ease-in-out;
+  color: #00ffff;
+  z-index: -2;
+  clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
+}
+
+@keyframes glitch-main {
+  0%, 15% {
+    transform: translate(0);
+    filter: hue-rotate(0deg);
+  }
+  20%, 25% {
+    transform: translate(-2px, -1px);
+    filter: hue-rotate(90deg);
+  }
+  30%, 35% {
+    transform: translate(-1px, 2px);
+    filter: hue-rotate(180deg);
+  }
+  40%, 45% {
+    transform: translate(3px, 1px);
+    filter: hue-rotate(270deg);
+  }
+  50%, 55% {
+    transform: translate(1px, -2px);
+    filter: hue-rotate(360deg);
+  }
+  60%, 65% {
+    transform: translate(-2px, 2px);
+    filter: hue-rotate(45deg);
+  }
+  70%, 75% {
+    transform: translate(2px, 1px);
+    filter: hue-rotate(135deg);
+  }
+  80%, 85% {
+    transform: translate(1px, -1px);
+    filter: hue-rotate(225deg);
+  }
+  90%, 95% {
+    transform: translate(-1px, -2px);
+    filter: hue-rotate(315deg);
+  }
+  100% {
+    transform: translate(0);
+    filter: hue-rotate(0deg);
+  }
+}
+
+@keyframes glitch-red {
+  0%, 15% {
+    transform: translate(0);
+    clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+  }
+  20%, 25% {
+    transform: translate(-3px, -2px);
+    clip-path: polygon(0 20%, 100% 20%, 100% 30%, 0 30%);
+  }
+  30%, 35% {
+    transform: translate(2px, -3px);
+    clip-path: polygon(0 60%, 100% 60%, 100% 70%, 0 70%);
+  }
+  40%, 45% {
+    transform: translate(-2px, 2px);
+    clip-path: polygon(0 10%, 100% 10%, 100% 40%, 0 40%);
+  }
+  50%, 55% {
+    transform: translate(3px, -1px);
+    clip-path: polygon(0 80%, 100% 80%, 100% 90%, 0 90%);
+  }
+  60%, 65% {
+    transform: translate(-1px, 3px);
+    clip-path: polygon(0 0%, 100% 0%, 100% 25%, 0 25%);
+  }
+  70%, 75% {
+    transform: translate(2px, 1px);
+    clip-path: polygon(0 50%, 100% 50%, 100% 75%, 0 75%);
+  }
+  80%, 85% {
+    transform: translate(-3px, -1px);
+    clip-path: polygon(0 15%, 100% 15%, 100% 35%, 0 35%);
+  }
+  90%, 95% {
+    transform: translate(1px, -2px);
+    clip-path: polygon(0 65%, 100% 65%, 100% 85%, 0 85%);
+  }
+  100% {
+    transform: translate(0);
+    clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+  }
+}
+
+@keyframes glitch-blue {
+  0%, 100% {
+    transform: translate(0);
+    clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
+  }
+  10% {
+    transform: translate(3px, 2px);
+    clip-path: polygon(0 70%, 100% 70%, 100% 80%, 0 80%);
+  }
+  20% {
+    transform: translate(-2px, 3px);
+    clip-path: polygon(0 30%, 100% 30%, 100% 40%, 0 40%);
+  }
+  30% {
+    transform: translate(2px, -2px);
+    clip-path: polygon(0 90%, 100% 90%, 100% 60%, 0 60%);
+  }
+  40% {
+    transform: translate(-3px, 1px);
+    clip-path: polygon(0 10%, 100% 10%, 100% 20%, 0 20%);
+  }
+  50% {
+    transform: translate(1px, -3px);
+    clip-path: polygon(0 75%, 100% 75%, 100% 100%, 0 100%);
+  }
+  60% {
+    transform: translate(-2px, -1px);
+    clip-path: polygon(0 25%, 100% 25%, 100% 50%, 0 50%);
+  }
+  70% {
+    transform: translate(3px, 1px);
+    clip-path: polygon(0 85%, 100% 85%, 100% 65%, 0 65%);
+  }
+  80% {
+    transform: translate(-1px, 2px);
+    clip-path: polygon(0 35%, 100% 35%, 100% 15%, 0 15%);
+  }
+  90% {
+    transform: translate(2px, -2px);
+    clip-path: polygon(0 55%, 100% 55%, 100% 95%, 0 95%);
+  }
+}
+
+/* Greeting text styling */
+.greeting-text {
+  font-weight: 700; /* Changed from 400 to 700 for bold */
+  letter-spacing: 0.02em;
+  opacity: 0.9;
+  animation: fadeInUp 0.8s ease-out 0.2s both;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 0.9;
+    transform: translateY(0);
+  }
+}
+
+/* Enhanced name styling */
+h1 {
+  animation: fadeInUp 0.8s ease-out 0.4s both;
+  letter-spacing: -0.02em;
+}
+
+/* Responsive adjustments for greeting */
+@media (max-width: 640px) {
+  .greeting-text {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    font-weight: 700; /* Ensure bold on mobile */
+  }
+}
+
+@media (min-width: 641px) and (max-width: 1023px) {
+  .greeting-text {
+    font-size: 1.125rem;
+    margin-bottom: 0.75rem;
+    font-weight: 700; /* Ensure bold on tablet */
+  }
+}
+
+@media (min-width: 1024px) {
+  .greeting-text {
+    font-size: 1.25rem;
+    margin-bottom: 0.75rem;
+    font-weight: 700; /* Ensure bold on desktop */
+  }
+}
+
+/* Add subtle hover effect to greeting */
+.greeting-text:hover {
+  color: #9ca3af;
+  transition: color 0.3s ease;
+}
+
+/* Add these to your existing CSS */
+
+/* Fallback 3D Animation */
+.fallback-3d-container {
+  background: linear-gradient(45deg, rgba(0, 0, 0, 0.9), rgba(15, 23, 42, 0.8));
+}
+
+.floating-shapes {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.shape {
+  position: absolute;
+  background: linear-gradient(45deg, #3b82f6, #1d4ed8);
+  border-radius: 50%;
+  opacity: 0.1;
+  animation: float 6s ease-in-out infinite;
+}
+
+.shape-1 {
+  width: 80px;
+  height: 80px;
+  top: 20%;
+  right: 20%;
+  animation-delay: 0s;
+}
+
+.shape-2 {
+  width: 120px;
+  height: 120px;
+  top: 60%;
+  right: 60%;
+  animation-delay: 1s;
+}
+
+.shape-3 {
+  width: 60px;
+  height: 60px;
+  top: 10%;
+  right: 70%;
+  animation-delay: 2s;
+}
+
+.shape-4 {
+  width: 100px;
+  height: 100px;
+  top: 80%;
+  right: 30%;
+  animation-delay: 3s;
+}
+
+.shape-5 {
+  width: 40px;
+  height: 40px;
+  top: 40%;
+  right: 10%;
+  animation-delay: 4s;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+    opacity: 0.1;
+  }
+  25% {
+    transform: translateY(-20px) rotate(90deg);
+    opacity: 0.2;
+  }
+  50% {
+    transform: translateY(-10px) rotate(180deg);
+    opacity: 0.15;
+  }
+  75% {
+    transform: translateY(-30px) rotate(270deg);
+    opacity: 0.25;
+  }
+}
+
+.gradient-orb {
+  position: absolute;
+  top: 50%;
+  right: 30%;
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.3) 0%, rgba(29, 78, 216, 0.1) 50%, transparent 100%);
+  border-radius: 50%;
+  animation: pulse-orb 4s ease-in-out infinite;
+  transform: translate(50%, -50%);
+}
+
+@keyframes pulse-orb {
+  0%, 100% {
+    transform: translate(50%, -50%) scale(1);
+    opacity: 0.3;
+  }
+  50% {
+    transform: translate(50%, -50%) scale(1.2);
+    opacity: 0.5;
+  }
+}
+
+/* Spline Loader */
+.spline-loader {
+  backdrop-filter: blur(10px);
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(59, 130, 246, 0.3);
+  border-top: 3px solid #3b82f6;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Performance optimizations */
+.hero-content {
+  will-change: transform;
+}
+
+.profile-image {
+  will-change: transform;
+}
+
+/* Smooth scrolling for better performance */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  .shape {
+    animation: none;
+  }
+  
+  .gradient-orb {
+    animation: none;
+  }
+  
+  .loading-spinner {
+    animation: none;
+  }
+  
+  * {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
+
+/* Optimize for mobile devices */
+@media (max-width: 1024px) {
+  .fallback-3d-container,
+  .spline-loader {
+    display: none;
+  }
+}
