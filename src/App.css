@@ -597,3 +597,50 @@ html {
     display: none;
   }
 }
+
+.cv-animated-btn {
+  position: relative;
+  overflow: hidden;
+  border: 2px solid #2563eb;
+  background: transparent;
+  color: #2563eb;
+  transition: color 0.35s, border-color 0.35s;
+}
+
+.cv-animated-btn span,
+.cv-animated-btn svg {
+  position: relative;
+  z-index: 2;
+  color: inherit;
+  transition: color 0.35s;
+}
+
+.cv-animated-btn::after {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 0;
+  height: 100%;
+  background: #2563eb;
+  transition: width 0.35s cubic-bezier(0.4,0,0.2,1);
+  z-index: 1;
+  border-radius: 0.5rem;
+}
+
+.cv-animated-btn:hover,
+.cv-animated-btn:focus {
+  color: #fff;
+  border-color: #2563eb;
+}
+
+.cv-animated-btn:hover::after,
+.cv-animated-btn:focus::after {
+  width: 100%;
+}
+
+.cv-animated-btn:hover span,
+.cv-animated-btn:hover svg,
+.cv-animated-btn:focus span,
+.cv-animated-btn:focus svg {
+  color: #fff;
+}
