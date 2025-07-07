@@ -1,5 +1,9 @@
 import React, { useEffect, useState, useRef, Suspense, lazy } from "react";
 import "./App.css";
+import emailjs from '@emailjs/browser';
+import { FaHtml5, FaCss3Alt, FaJs, FaReact, FaBootstrap, FaPhp, FaNodeJs, FaGitAlt, FaGithub, FaJava, FaPython, FaLinux, FaFigma, FaAndroid, FaRProject, FaRegCircle } from 'react-icons/fa';
+import { SiTailwindcss, SiExpress, SiMongodb, SiMysql, SiKotlin, SiEclipseide, SiPostman, SiIntellijidea, SiFirebase } from 'react-icons/si';
+import { CgCPlusPlus } from 'react-icons/cg';
 
 // Lazy load Spline for better performance
 const Spline = lazy(() => import("@splinetool/react-spline"));
@@ -32,6 +36,39 @@ function App() {
     "Web Designer",
     "UI/UX Designer"
   ];
+
+  // Skill icon mapping
+  const skillIcons = {
+    'HTML': <FaHtml5 className="text-orange-500 text-2xl mb-1" />, 
+    'CSS': <FaCss3Alt className="text-blue-400 text-2xl mb-1" />, 
+    'JavaScript': <FaJs className="text-yellow-400 text-2xl mb-1" />, 
+    'React.js': <FaReact className="text-cyan-400 text-2xl mb-1" />, 
+    'Tailwind CSS': <SiTailwindcss className="text-sky-400 text-2xl mb-1" />, 
+    'Bootstrap': <FaBootstrap className="text-purple-500 text-2xl mb-1" />, 
+    'Three.js': <FaRegCircle className="text-indigo-400 text-2xl mb-1" />, // Placeholder
+    'PHP': <FaPhp className="text-indigo-500 text-2xl mb-1" />, 
+    'Node.js': <FaNodeJs className="text-green-500 text-2xl mb-1" />, 
+    'Express.js': <SiExpress className="text-gray-300 text-2xl mb-1" />, 
+    'RESTful APIs': <FaNodeJs className="text-green-400 text-2xl mb-1" />, 
+    'MongoDB': <SiMongodb className="text-green-600 text-2xl mb-1" />, 
+    'MySQL': <SiMysql className="text-blue-500 text-2xl mb-1" />, 
+    'C': <FaJava className="text-blue-400 text-2xl mb-1" />, // No C icon, using Java as fallback
+    'C++': <CgCPlusPlus className="text-blue-400 text-2xl mb-1" />, 
+    'Java': <FaJava className="text-red-500 text-2xl mb-1" />, 
+    'Python': <FaPython className="text-yellow-400 text-2xl mb-1" />, 
+    'Kotlin': <SiKotlin className="text-purple-400 text-2xl mb-1" />, 
+    'R': <FaRProject className="text-blue-400 text-2xl mb-1" />, 
+    'VS Code': <FaRegCircle className="text-blue-400 text-2xl mb-1" />, // Placeholder
+    'Eclipse': <SiEclipseide className="text-yellow-400 text-2xl mb-1" />, 
+    'Android Studio': <FaAndroid className="text-green-500 text-2xl mb-1" />, 
+    'Git': <FaGitAlt className="text-orange-500 text-2xl mb-1" />, 
+    'GitHub': <FaGithub className="text-gray-300 text-2xl mb-1" />, 
+    'Postman': <SiPostman className="text-orange-400 text-2xl mb-1" />, 
+    'Intellij': <SiIntellijidea className="text-pink-500 text-2xl mb-1" />, 
+    'Figma': <FaFigma className="text-pink-400 text-2xl mb-1" />, 
+    'Firebase': <SiFirebase className="text-yellow-400 text-2xl mb-1" />, 
+    'linux': <FaLinux className="text-yellow-300 text-2xl mb-1" />
+  };
 
   // Optimized pointer movement handler
   const handlePointerMove = (e) => {
@@ -258,6 +295,40 @@ function App() {
     </>
   );
 
+  const [form, setForm] = useState({ name: '', email: '', message: '' });
+const [sending, setSending] = useState(false);
+const [sent, setSent] = useState(false);
+const [error, setError] = useState('');
+
+const handleInputChange = (e) => {
+  setForm({ ...form, [e.target.name]: e.target.value });
+};
+
+const handleSendEmail = async (e) => {
+  e.preventDefault();
+  setSending(true);
+  setError('');
+  setSent(false);
+
+  try {
+    await emailjs.send(
+      'service_89054w9',      // Replace with your EmailJS Service ID
+      'template_2wlsxxn',     // Replace with your EmailJS Template ID
+      {
+        from_name: form.name,
+        email_id: form.email,
+        message: form.message,
+      },
+      'L5hybAt3fCg8Ey9Ox'       // Replace with your EmailJS Public Key
+    );
+    setSent(true);
+    setForm({ name: '', email: '', message: '' });
+  } catch (err) {
+    setError('Failed to send message. Please try again.');
+  }
+  setSending(false);
+};
+
   return (
     <div className="font-sans bg-black text-white min-h-screen">
       {/* Navigation: both navs rendered, cross-fade and morph */}
@@ -409,7 +480,7 @@ function App() {
                   <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.30 3.297-1.30.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
                 </svg>
               </a>
-              <a href="#" className="social-link w-10 h-10 sm:w-12 sm:h-12 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-blue-600 hover:shadow-lg hover:shadow-blue-500/30 transition-all duration-300 transform hover:scale-110 group">
+              <a href="https://www.linkedin.com/in/thaveeshasanjana" target="_blank" rel="noopener noreferrer" className="social-link w-10 h-10 sm:w-12 sm:h-12 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-blue-600 hover:shadow-lg hover:shadow-blue-500/30 transition-all duration-300 transform hover:scale-110 group">
                 <svg className="w-5 h-5 sm:w-6 sm:h-6 text-gray-300 group-hover:text-white transition-colors duration-300" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
                 </svg>
@@ -507,9 +578,9 @@ function App() {
     </section>
 
     {/* 3. Skills Section */}
-    <section id="skills" className={`py-16 sm:py-20 lg:py-24 bg-black relative transition-all duration-1000 ${visibleSections.has('skills') ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+    <section id="skills" className={`py-16 sm:py-20 lg:py-24 bg-black relative transition-all duration-1000 ${visibleSections.has('skills') ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}> 
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
-        <div className={`text-center mb-12 sm:mb-16 transition-all duration-700 delay-200 ${visibleSections.has('skills') ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+        <div className={`text-center mb-12 sm:mb-16 transition-all duration-700 delay-200 ${visibleSections.has('skills') ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}> 
           <h2 className="text-3xl sm:text-4xl font-bold mb-4 text-white">Skills & Technologies</h2>
           <div className="w-16 sm:w-20 h-1 bg-blue-500 mx-auto section-divider"></div>
         </div>
@@ -542,20 +613,18 @@ function App() {
           ].map((category, index) => (
             <div 
               key={category.title}
-              className={`card text-center p-6 sm:p-8 bg-gray-800 rounded-xl border border-gray-700 shadow-md hover:shadow-lg transition-all duration-700 ${visibleSections.has('skills') ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-10 scale-95'}`}
-              style={{transitionDelay: `${300 + index * 200}ms`}}
+              className={`card text-center p-6 sm:p-8 bg-gray-800 rounded-xl border border-gray-700 shadow-md hover:shadow-lg transition-all duration-500 ease-in-out transform ${visibleSections.has('skills') ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
+              style={{transitionDelay: `${200 + index * 100}ms`}}
             >
-              <div className={`text-3xl sm:text-4xl mb-4 sm:mb-6 text-blue-400 transition-all duration-500 ${visibleSections.has('skills') ? 'scale-100 rotate-0' : 'scale-75 rotate-12'}`} style={{transitionDelay: `${500 + index * 200}ms`}}>{category.icon}</div>
               <h3 className="text-lg sm:text-xl font-semibold mb-4 sm:mb-6 text-gray-200">{category.title}</h3>
-              <div className="flex flex-wrap gap-2 sm:gap-3 justify-center">
-                {category.skills.map((skill, skillIndex) => (
-                  <span 
-                    key={skill} 
-                    className={`skill-tag px-3 py-1.5 sm:px-4 sm:py-2 bg-blue-900 text-blue-300 rounded-full text-xs sm:text-sm font-medium hover:bg-blue-800 transition-all duration-500 ${visibleSections.has('skills') ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-3'}`}
-                    style={{transitionDelay: `${700 + index * 100 + skillIndex * 100}ms`}}
-                  >
-                    {skill}
-                  </span>
+              <div className="grid grid-cols-2 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 justify-items-center">
+                {category.skills.map((skill) => (
+                  <div key={skill} className="flex flex-col items-center mb-2 group transition-all duration-500 ease-in-out">
+                    <span className="transition-transform duration-500 ease-in-out group-hover:scale-110 group-hover:brightness-125">
+                      {skillIcons[skill]}
+                    </span>
+                    <span className="text-xs sm:text-sm text-blue-200 mt-1 transition-colors duration-500 group-hover:text-white">{skill}</span>
+                  </div>
                 ))}
               </div>
             </div>
@@ -794,38 +863,81 @@ function App() {
             </div>
           </div>
           <div className={`space-y-4 sm:space-y-6 bg-gray-800 p-4 sm:p-6 lg:p-8 rounded-xl border border-gray-700 shadow-md transition-all duration-700 delay-400 ${visibleSections.has('contact') ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'}`}>
-            <div className={`transition-all duration-500 delay-600 ${visibleSections.has('contact') ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-3'}`}>
-              <input
-                type="text"
-                placeholder="Your Name"
-                className="form-input w-full px-4 py-2.5 sm:px-5 sm:py-3 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:border-blue-500 transition-all text-white placeholder-gray-400 text-sm sm:text-base"
-              />
-            </div>
-            <div className={`transition-all duration-500 delay-700 ${visibleSections.has('contact') ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-3'}`}>
-              <input
-                type="email"
-                placeholder="Your Email"
-                className="form-input w-full px-4 py-2.5 sm:px-5 sm:py-3 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:border-blue-500 transition-all text-white placeholder-gray-400 text-sm sm:text-base"
-              />
-            </div>
-            <div className={`transition-all duration-500 delay-800 ${visibleSections.has('contact') ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-3'}`}>
-              <textarea
-                placeholder="Your Message"
-                rows="4"
-                className="form-input w-full px-4 py-2.5 sm:px-5 sm:py-3 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:border-blue-500 transition-all resize-none text-white placeholder-gray-400 text-sm sm:text-base"
-              ></textarea>
-            </div>
-            <div className={`transition-all duration-500 delay-900 ${visibleSections.has('contact') ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-3 scale-95'}`}>
-              <button
-                type="button"
-                className="w-full px-4 py-2.5 sm:px-6 sm:py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-500 transition-all duration-300 shadow-md hover:shadow-lg flex items-center justify-center gap-2 btn-primary text-sm sm:text-base"
-              >
-                <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
-                </svg>
-                Send Message
-              </button>
-            </div>
+            <form onSubmit={handleSendEmail} className="space-y-6">
+              <div className="flex flex-col gap-2">
+                <label htmlFor="name" className="text-gray-300 font-medium text-sm">
+                  Name <span className="text-red-500">*</span>
+                </label>
+                <input
+                  id="name"
+                  type="text"
+                  name="name"
+                  placeholder="Your Name"
+                  value={form.name}
+                  onChange={handleInputChange}
+                  required
+                  className="form-input w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30 transition-all text-white placeholder-gray-400 text-base"
+                  autoComplete="name"
+                />
+              </div>
+              <div className="flex flex-col gap-2">
+                <label htmlFor="email" className="text-gray-300 font-medium text-sm">
+                  Email <span className="text-red-500">*</span>
+                </label>
+                <input
+                  id="email"
+                  type="email"
+                  name="email"
+                  placeholder="Your Email"
+                  value={form.email}
+                  onChange={handleInputChange}
+                  required
+                  className="form-input w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30 transition-all text-white placeholder-gray-400 text-base"
+                  autoComplete="email"
+                />
+              </div>
+              <div className="flex flex-col gap-2">
+                <label htmlFor="message" className="text-gray-300 font-medium text-sm">
+                  Message <span className="text-red-500">*</span>
+                </label>
+                <textarea
+                  id="message"
+                  name="message"
+                  placeholder="Your Message"
+                  rows="5"
+                  value={form.message}
+                  onChange={handleInputChange}
+                  required
+                  className="form-input w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30 transition-all resize-none text-white placeholder-gray-400 text-base"
+                ></textarea>
+              </div>
+              <div>
+                <button
+                  type="submit"
+                  disabled={sending}
+                  className="w-full px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-500 focus:bg-blue-700 transition-all duration-300 shadow-md hover:shadow-lg flex items-center justify-center gap-2 text-base disabled:opacity-60 disabled:cursor-not-allowed"
+                >
+                  {sending ? (
+                    <>
+                      <svg className="w-5 h-5 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
+                      </svg>
+                      Sending...
+                    </>
+                  ) : (
+                    <>
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+                      </svg>
+                      Send Message
+                    </>
+                  )}
+                </button>
+                {sent && <p className="text-green-400 mt-3 text-sm text-center">Message sent successfully!</p>}
+                {error && <p className="text-red-400 mt-3 text-sm text-center">{error}</p>}
+              </div>
+            </form>
           </div>
         </div>
       </div>
@@ -853,14 +965,21 @@ function App() {
             ].map((social, index) => (
               <a 
                 key={social.name}
-                href={social.name === 'GitHub' ? 'https://github.com/ThaveeshaS' : social.name === 'Instagram' ? 'https://www.instagram.com/_thaveeya_s275?igsh=MXJicHhicmZhaXhrdw==' : '#'}
-                target={social.name === 'GitHub' || social.name === 'Instagram' ? '_blank' : '_self'}
-                rel={social.name === 'GitHub' || social.name === 'Instagram' ? 'noopener noreferrer' : ''} 
+                href={
+                  social.name === 'GitHub'
+                    ? 'https://github.com/ThaveeshaS'
+                    : social.name === 'Instagram'
+                    ? 'https://www.instagram.com/_thaveeya_s275?igsh=MXJicHhicmZhaXhrdw=='
+                    : social.name === 'LinkedIn'
+                    ? 'https://www.linkedin.com/in/thaveeshasanjana'
+                    : '#'
+                }
+                target={social.name !== '#' ? '_blank' : '_self'}
+                rel={social.name !== '#' ? 'noopener noreferrer' : ''}
                 className="footer-link text-gray-400 hover:text-blue-400 transition-colors flex items-center gap-1 sm:gap-2 animate-scale-in text-xs sm:text-sm"
                 style={{animationDelay: `${index * 0.1}s`}}
               >
                 <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="currentColor" viewBox="0 0 24 24">
-
                   <path d={social.path} />
                 </svg>
                 <span className="hidden sm:inline">{social.name}</span>
