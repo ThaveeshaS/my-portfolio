@@ -7,7 +7,6 @@ import { CgCPlusPlus } from 'react-icons/cg';
 import threejsLogo from './images/three-js-icon.svg';
 import vscodeLogo from './images/visual-studio-code-icon.svg';
 import cLogo from './images/c-program-icon.svg';
-import ThreeScene from "./ThreeScene";
 
 // Lazy load Spline for better performance
 const Spline = lazy(() => import("@splinetool/react-spline"));
@@ -412,11 +411,11 @@ const handleSendEmail = async (e) => {
     {/* 1. Hero Section */}
     <section 
       id="home" 
-      className="min-h-[110vh] flex items-center justify-center relative pt-32 sm:pt-40 lg:pt-48 pb-20 sm:pb-28 lg:pb-36 overflow-hidden"
+      className="min-h-[110vh] flex items-center justify-center relative pt-16 sm:pt-24 lg:pt-32 pb-28 sm:pb-36 lg:pb-44 overflow-hidden"
     >
       {/* 3D Animation Container */}
       <div
-        className="hidden lg:block"
+        className="hidden lg:block -mt-8 sm:-mt-12 lg:-mt-16"
         style={{
           position: "absolute",
           top: 0,
@@ -700,9 +699,14 @@ const handleSendEmail = async (e) => {
           </p>
         </div>
         <div className="grid sm:grid-cols-2 xl:grid-cols-3 gap-6 sm:gap-8">
-          {[1, 2, 3].map((project, index) => (
+          {[
+            { title: 'NovelNest' },
+            { title: 'BIDMASTER' },
+            { title: 'NotifyMEApp' },
+            { title: 'EliteHealthCareApp' }
+          ].map((project, index) => (
             <div 
-              key={project} 
+              key={project.title} 
               className={`project-card group relative bg-gray-900 rounded-xl overflow-hidden border border-gray-700 shadow-md hover:shadow-lg transition-all duration-700 ${visibleSections.has('projects') ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-10 scale-95'}`}
               style={{transitionDelay: `${300 + index * 200}ms`}}
             >
@@ -714,7 +718,7 @@ const handleSendEmail = async (e) => {
               </div>
               <div className="p-4 sm:p-6">
                 <h3 className="text-lg sm:text-xl font-semibold mb-2 text-gray-200 group-hover:text-blue-400 transition-colors">
-                  Project {project}
+                  {project.title}
                 </h3>
                 <p className="text-gray-400 text-xs sm:text-sm mb-4 leading-relaxed">
                   A brief description of the project's purpose and the technologies used to build it.
