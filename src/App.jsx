@@ -4,6 +4,10 @@ import emailjs from '@emailjs/browser';
 import { FaHtml5, FaCss3Alt, FaJs, FaReact, FaBootstrap, FaPhp, FaNodeJs, FaGitAlt, FaGithub, FaJava, FaPython, FaLinux, FaFigma, FaAndroid, FaRProject, FaRegCircle } from 'react-icons/fa';
 import { SiTailwindcss, SiExpress, SiMongodb, SiMysql, SiKotlin, SiEclipseide, SiPostman, SiIntellijidea, SiFirebase } from 'react-icons/si';
 import { CgCPlusPlus } from 'react-icons/cg';
+import threejsLogo from './images/three-js-icon.svg';
+import vscodeLogo from './images/visual-studio-code-icon.svg';
+import cLogo from './images/c-program-icon.svg';
+import ThreeScene from "./ThreeScene";
 
 // Lazy load Spline for better performance
 const Spline = lazy(() => import("@splinetool/react-spline"));
@@ -19,6 +23,8 @@ function App() {
   const [isFloating, setIsFloating] = useState(false);
   const [splineLoaded, setSplineLoaded] = useState(false);
   const [splineError, setSplineError] = useState(false);
+  const [timelineLineHeight, setTimelineLineHeight] = useState(0);
+  const [showMobileMenu, setShowMobileMenu] = useState(false);
   
   const educationSectionRef = useRef(null);
   const educationItemsRef = useRef([]);
@@ -34,7 +40,8 @@ function App() {
     "Full Stack Developer",
     "Web Developer", 
     "Web Designer",
-    "UI/UX Designer"
+    "UI/UX Designer",
+    "App Developer"
   ];
 
   // Skill icon mapping
@@ -45,20 +52,20 @@ function App() {
     'React.js': <FaReact className="text-cyan-400 text-2xl mb-1" />, 
     'Tailwind CSS': <SiTailwindcss className="text-sky-400 text-2xl mb-1" />, 
     'Bootstrap': <FaBootstrap className="text-purple-500 text-2xl mb-1" />, 
-    'Three.js': <FaRegCircle className="text-indigo-400 text-2xl mb-1" />, // Placeholder
+    'Three.js': <img src={threejsLogo} alt="Three.js" className="w-8 h-8 mb-1" />, 
     'PHP': <FaPhp className="text-indigo-500 text-2xl mb-1" />, 
     'Node.js': <FaNodeJs className="text-green-500 text-2xl mb-1" />, 
     'Express.js': <SiExpress className="text-gray-300 text-2xl mb-1" />, 
-    'RESTful APIs': <FaNodeJs className="text-green-400 text-2xl mb-1" />, 
+    'RESTful APIs': <span className="text-green-400 text-2xl mb-1">API</span>, // Placeholder, replace with SVG if available
     'MongoDB': <SiMongodb className="text-green-600 text-2xl mb-1" />, 
     'MySQL': <SiMysql className="text-blue-500 text-2xl mb-1" />, 
-    'C': <FaJava className="text-blue-400 text-2xl mb-1" />, // No C icon, using Java as fallback
+    'C': <img src={cLogo} alt="C" className="w-8 h-8 mb-1" />,
     'C++': <CgCPlusPlus className="text-blue-400 text-2xl mb-1" />, 
     'Java': <FaJava className="text-red-500 text-2xl mb-1" />, 
     'Python': <FaPython className="text-yellow-400 text-2xl mb-1" />, 
     'Kotlin': <SiKotlin className="text-purple-400 text-2xl mb-1" />, 
     'R': <FaRProject className="text-blue-400 text-2xl mb-1" />, 
-    'VS Code': <FaRegCircle className="text-blue-400 text-2xl mb-1" />, // Placeholder
+    'VS Code': <img src={vscodeLogo} alt="VS Code" className="w-8 h-8 mb-1" />, 
     'Eclipse': <SiEclipseide className="text-yellow-400 text-2xl mb-1" />, 
     'Android Studio': <FaAndroid className="text-green-500 text-2xl mb-1" />, 
     'Git': <FaGitAlt className="text-orange-500 text-2xl mb-1" />, 
@@ -173,6 +180,7 @@ function App() {
               
               // Check which education items should be visible
               const newVisibleItems = new Set();
+              let lastVisibleBottom = 0;
               educationItemsRef.current.forEach((item, index) => {
                 if (item) {
                   const itemRect = item.getBoundingClientRect();
@@ -181,11 +189,15 @@ function App() {
                   // Make item visible when its center is in the viewport
                   if (itemCenter < windowHeight * 0.8) {
                     newVisibleItems.add(index);
+                    // Track the bottom of the last visible card
+                    lastVisibleBottom = Math.max(lastVisibleBottom, itemRect.bottom - rect.top);
                   }
                 }
               });
               
               setVisibleEducationItems(newVisibleItems);
+              // Set the timeline line height to the bottom of the last visible card, capped to section height
+              setTimelineLineHeight(Math.min(lastVisibleBottom, sectionHeight));
             }
           }
           
@@ -285,13 +297,40 @@ function App() {
             <li><a href="#contact" className={`transition-all duration-300 hover:text-blue-400 nav-link ${isScrolled ? 'text-gray-200 hover:text-blue-300' : 'text-gray-300'}`}>Contact</a></li>
           </ul>
           {/* Mobile menu button */}
-          <button className="md:hidden text-gray-300 hover:text-blue-400 transition-colors p-2 rounded-lg hover:bg-gray-800/50">
+          <button
+            className="md:hidden text-gray-300 hover:text-blue-400 transition-colors p-2 rounded-lg hover:bg-gray-800/50"
+            aria-label="Open mobile menu"
+            onClick={() => setShowMobileMenu(true)}
+          >
             <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"></path>
             </svg>
           </button>
         </div>
       </div>
+      {/* Mobile menu overlay */}
+      {showMobileMenu && (
+        <>
+          {/* Overlay */}
+          <div
+            className="mobile-drawer-overlay"
+            onClick={() => setShowMobileMenu(false)}
+            tabIndex={-1}
+            aria-label="Close mobile menu"
+          ></div>
+          {/* Right-side drawer */}
+          <nav className="mobile-drawer" role="dialog" aria-modal="true">
+            <ul className="mobile-drawer-links justify-center h-full flex flex-col items-center">
+              <li><a href="#home" className="mobile-drawer-link" onClick={() => setShowMobileMenu(false)}>Home</a></li>
+              <li><a href="#about" className="mobile-drawer-link" onClick={() => setShowMobileMenu(false)}>About</a></li>
+              <li><a href="#skills" className="mobile-drawer-link" onClick={() => setShowMobileMenu(false)}>Skills</a></li>
+              <li><a href="#projects" className="mobile-drawer-link" onClick={() => setShowMobileMenu(false)}>Projects</a></li>
+              <li><a href="#education" className="mobile-drawer-link" onClick={() => setShowMobileMenu(false)}>Education</a></li>
+              <li><a href="#contact" className="mobile-drawer-link" onClick={() => setShowMobileMenu(false)}>Contact</a></li>
+            </ul>
+          </nav>
+        </>
+      )}
     </>
   );
 
@@ -328,6 +367,23 @@ const handleSendEmail = async (e) => {
   }
   setSending(false);
 };
+
+  // Add ESC key and click outside support for mobile menu
+  useEffect(() => {
+    if (!showMobileMenu) return;
+    function handleKeyDown(e) {
+      if (e.key === 'Escape') setShowMobileMenu(false);
+    }
+    function handleClick(e) {
+      if (e.target.classList.contains('mobile-menu-overlay')) setShowMobileMenu(false);
+    }
+    window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener('mousedown', handleClick);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('mousedown', handleClick);
+    };
+  }, [showMobileMenu]);
 
   return (
     <div className="font-sans bg-black text-white min-h-screen">
@@ -706,19 +762,18 @@ const handleSendEmail = async (e) => {
             
             {/* Timeline line - animated progress */}
             <div 
-              className="absolute left-6 sm:left-8 top-0 w-0.5 bg-gradient-to-b from-blue-400 to-blue-600 hidden sm:block transition-all duration-300 ease-out"
+              className="absolute left-6 sm:left-8 top-0 w-0.5 bg-gradient-to-b from-blue-400 to-blue-600 hidden sm:block transition-all duration-1000 ease-in-out shadow-lg"
               style={{
-                height: `${timelineProgress * 100}%`,
+                height: timelineLineHeight,
                 transformOrigin: 'top'
               }}
             ></div>
             
             {/* Mobile timeline indicator */}
             <div className="sm:hidden absolute left-4 top-0 bottom-0 w-px bg-gray-700"></div>
-            <div 
-              className="sm:hidden absolute left-4 top-0 w-px bg-gradient-to-b from-blue-400 to-blue-600 transition-all duration-300 ease-out"
+            <div className="sm:hidden absolute left-4 top-0 w-px bg-gradient-to-b from-blue-400 to-blue-600 transition-all duration-1000 ease-in-out shadow-lg"
               style={{
-                height: `${timelineProgress * 100}%`,
+                height: timelineLineHeight,
                 transformOrigin: 'top'
               }}
             ></div>
