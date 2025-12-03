@@ -785,7 +785,7 @@ const handleSendEmail = async (e) => {
             <div className="space-y-8 sm:space-y-12">
               {[
                 {
-                  year: "2020 - 2024",
+                  year: "2022 - Present",
                   degree: "Bachelor of Science in Computer Science",
                   institution: "University of Colombo",
                   location: "Colombo, Sri Lanka",
@@ -799,16 +799,15 @@ const handleSendEmail = async (e) => {
                   icon: "🎓"
                 },
                 {
-                  year: "2018 - 2020",
+                  year: "2019 - 2021",
                   degree: "Advanced Level (A/L)",
-                  institution: "Royal College",
-                  location: "Colombo, Sri Lanka",
-                  description: "Completed Advanced Level in Mathematics, Physics, and Information & Communication Technology.",
+                  institution: "Richmond College",
+                  location: "Galle, Sri Lanka",
+                  description: "Completed Advanced Level in Sinhala, Geography, and Information & Communication Technology.",
                   achievements: [
-                    "3 A's in Mathematics, Physics, ICT",
+                    "3 A's in Sinhala, Geography, ICT",
                     "Island Rank: 15th in ICT",
-                    "School Captain - IT Society",
-                    "Best Student in Computer Science"
+                    "Member of the Badminton Team (2008 - 2021)",
                   ],
                   icon: "📚"
                 },
